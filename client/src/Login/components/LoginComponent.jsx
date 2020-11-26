@@ -254,7 +254,6 @@ function LoginComponent(props) {
                 </Form.Group>
               ) : null}
             </Form.Row>
-            {console.log(errors)}
             <Button
               type="submit"
               variant="primary"
