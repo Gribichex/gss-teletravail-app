@@ -14,8 +14,8 @@ function register(req, res, next) {
     email: req.body.email,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    department:req.body.department,
-    nonWorkingDays:[]
+    department: req.body.department,
+    nonWorkingDays: [],
   });
 
   // Create the user with the specified password
@@ -47,22 +47,21 @@ passport.use(
     // When we have a verified token
     (payload, done) => {
       // Find the real user from our database using the `id` in the JWT
-      
+
       User.findById(payload.sub)
         .then((user) => {
           // If user was found with this id
           if (user) {
-            
             done(null, user);
           } else {
             // If not user was found
-            
+
             done(null, false);
           }
         })
         .catch((error) => {
           // If there was failure
-          
+
           done(error, false);
         });
     }

@@ -13,8 +13,6 @@ import { v4 as uuidv4 } from "uuid";
 const Home = (props) => {
   const nowDate = new Date();
 
-  console.log("coucou");
-
   const [selectedDate, setSelectedDate] = useState({
     indexOfMonth: getMonth(nowDate),
     indexOfYear: getYear(nowDate),
@@ -32,7 +30,15 @@ const Home = (props) => {
     <Container fluid className="mt-5">
       <Row className="my-5">
         <Col>
-          <MonthPicker key ={uuidv4()} handleChangeDate={handleChangeDate} />
+          <MonthPicker
+            key={uuidv4()}
+            handleChangeDate={handleChangeDate}
+            selected={
+              new Date(
+                Date.UTC(selectedDate.indexOfYear, selectedDate.indexOfMonth)
+              )
+            }
+          />
         </Col>
       </Row>
       <Row className="my-5">
