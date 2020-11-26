@@ -9,7 +9,7 @@ import getMonth from "date-fns/getMonth";
 import getYear from "date-fns/getYear";
 import HomeArray from "./components/HomeArray";
 import { v4 as uuidv4 } from "uuid";
-
+import TickDay from "./components/TickDay";
 const Home = (props) => {
   const nowDate = new Date();
 
@@ -64,8 +64,54 @@ const Home = (props) => {
                     })}
                   </h1>
                 </Col>
+<Col></Col>
 
-                <Col>Légende</Col>
+                <Col>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Jour sur site</td>
+                        <TickDay
+                          {...props}
+                          key={uuidv4()}
+                          indexJour={0}
+                          isClickable={false}
+                          status={0}
+                        />
+                      </tr>
+                      <tr>
+                      <td>Jour en télétravail</td>
+                        <TickDay
+                          {...props}
+                          key={uuidv4()}
+                          indexJour={1}
+                          isClickable={false}
+                          status={1}
+                        />
+                      </tr>
+                      <tr>
+                      <td>Jour de congé</td>
+                        <TickDay
+                          {...props}
+                          key={uuidv4()}
+                          indexJour={0}
+                          isClickable={false}
+                          status={2}
+                        />
+                      </tr>
+                      <tr>
+                      <td>Week-end</td>
+                        <TickDay
+                          {...props}
+                          key={uuidv4()}
+                          indexJour={0}
+                          isClickable={false}
+                          status={3}
+                        />
+                        </tr>
+                    </tbody>
+                  </table>
+                </Col>
               </Row>
             </Container>
           </Jumbotron>
