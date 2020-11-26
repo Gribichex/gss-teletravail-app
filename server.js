@@ -24,8 +24,8 @@ app.use(express.static("public"));
 app.use("/", [require("./routes/auth"), require("./routes/user")]);
 
 /* Set Security Configs */
-app.use(helmet());
-app.use(hpp());
+//app.use(helmet());
+//app.use(hpp());
 
 /* Avoid Cross-site request forgery */
 //app.use(csurf());
