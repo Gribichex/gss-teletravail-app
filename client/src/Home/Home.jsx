@@ -50,17 +50,23 @@ const Home = (props) => {
         <Col>
           <Jumbotron fluid>
             <Container>
-              <h1>
-                {" "}
-                Planning GSS{" "}
-                {new Date(
-                  selectedDate.indexOfYear,
-                  selectedDate.indexOfMonth
-                ).toLocaleDateString("fr-FR", {
-                  year: "numeric",
-                  month: "long",
-                })}
-              </h1>
+              <Row>
+                <Col>
+                  <h1>
+                    {" "}
+                    Planning GSS{" "}
+                    {new Date(
+                      selectedDate.indexOfYear,
+                      selectedDate.indexOfMonth
+                    ).toLocaleDateString("fr-FR", {
+                      year: "numeric",
+                      month: "long",
+                    })}
+                  </h1>
+                </Col>
+
+                <Col>Légende</Col>
+              </Row>
             </Container>
           </Jumbotron>
         </Col>

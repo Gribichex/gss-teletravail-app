@@ -10,9 +10,16 @@ import { Container } from "react-bootstrap";
 function LoginComponent(props) {
   const history = useHistory();
 
+  const [isRegistered, setIsRegistered] = useState(false);
   const schema = yup.object({
-    fName: yup.string().required("Champs obligatoire"),
-    lName: yup.string().required("Champs obligatoire"),
+    fName: yup.string().when("$isRegistered", {
+      is: true,
+      then: yup.string().required("obligatoire"),
+    }),
+    lName: yup.string().when("$isRegistered", {
+      is: true,
+      then: yup.string().required("obligatoire"),
+    }),
     email: yup
       .string()
       .email("Entrez une adresse valide")
@@ -34,9 +41,6 @@ function LoginComponent(props) {
         "Les mots de passe doivent être identiques"
       ),
   });
-
-  const [isRegistered, setIsRegistered] = useState(false);
-
   const CheckMailExistence = () => {
     const { values } = useFormikContext();
 
@@ -127,14 +131,14 @@ function LoginComponent(props) {
               });
           } else {
             handleRegister(values)
-            .then(() => {
+              .then(() => {
                 actions.setSubmitting(false);
                 history.push("/");
               })
               .catch((error) => {
                 alert(error.message);
                 actions.setSubmitting(false);
-              })
+              });
           }
         }}
         initialValues={{
@@ -250,6 +254,7 @@ function LoginComponent(props) {
                 </Form.Group>
               ) : null}
             </Form.Row>
+            {console.log(errors)}
             <Button
               type="submit"
               variant="primary"
