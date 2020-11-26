@@ -36,6 +36,27 @@ const HomeArray = (props) => {
          result[userIndex] = result.splice(0, 1, result[userIndex])[0];
 
           setUserData(result);
+
+      //creation des stats
+         /*
+         nbDays = props.selectedDate.nbDays;
+
+          for (let i = 0; i < nbDays; i++) {
+            let currentDate = new Date(
+              Date.UTC(month.indexOfYear, month.indexOfMonth, indexJour + 1)
+            );
+          }
+
+          const reducer = (accumulator, currentValue, idx) =>
+            accumulator + currentValue.nonWorkingDays[idx];
+
+          result;
+          let chartData = result.map((element) => {
+            return element.isActive;*/
+
+            //{ name: "Page A", uv: 400, pv: 2400, amt: 2400 }*/
+
+
         },
         // Remarque : il faut gérer les erreurs ici plutôt que dans
         // un bloc catch() afin que nous n’avalions pas les exceptions

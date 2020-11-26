@@ -10,9 +10,9 @@ import getYear from "date-fns/getYear";
 import HomeArray from "./components/HomeArray";
 import { v4 as uuidv4 } from "uuid";
 import TickDay from "./components/TickDay";
+
 const Home = (props) => {
   const nowDate = new Date();
-
   const [selectedDate, setSelectedDate] = useState({
     indexOfMonth: getMonth(nowDate),
     indexOfYear: getYear(nowDate),
@@ -51,7 +51,7 @@ const Home = (props) => {
           <Jumbotron fluid>
             <Container>
               <Row>
-                <Col>
+                <Col md>
                   <h1>
                     {" "}
                     Planning GSS{" "}
@@ -64,9 +64,8 @@ const Home = (props) => {
                     })}
                   </h1>
                 </Col>
-<Col></Col>
-
-                <Col>
+                <Col md></Col>
+                <Col md>
                   <table>
                     <tbody>
                       <tr>
@@ -80,7 +79,7 @@ const Home = (props) => {
                         />
                       </tr>
                       <tr>
-                      <td>Jour en télétravail</td>
+                        <td>Jour en télétravail</td>
                         <TickDay
                           {...props}
                           key={uuidv4()}
@@ -90,7 +89,7 @@ const Home = (props) => {
                         />
                       </tr>
                       <tr>
-                      <td>Jour de congé</td>
+                        <td>Jour de congé</td>
                         <TickDay
                           {...props}
                           key={uuidv4()}
@@ -100,7 +99,7 @@ const Home = (props) => {
                         />
                       </tr>
                       <tr>
-                      <td>Week-end</td>
+                        <td>Week-end</td>
                         <TickDay
                           {...props}
                           key={uuidv4()}
@@ -108,7 +107,7 @@ const Home = (props) => {
                           isClickable={false}
                           status={3}
                         />
-                        </tr>
+                      </tr>
                     </tbody>
                   </table>
                 </Col>
