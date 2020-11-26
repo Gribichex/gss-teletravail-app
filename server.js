@@ -34,7 +34,7 @@ app.use(hpp());
 
 if (process.env.NODE_ENV !== "production") {
   // We start a proxy to the create-react-app dev server
-
+  app.use(express.static("public"));
   app.use(
     "/",
     createProxyMiddleware({
@@ -45,6 +45,7 @@ if (process.env.NODE_ENV !== "production") {
 } else {
   // When in production
   // All url paths go to the bundled index.html
+  app.use(express.static(path.join(__dirname, 'build')));
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
