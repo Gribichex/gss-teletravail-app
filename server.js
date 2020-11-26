@@ -45,7 +45,7 @@ if (process.env.NODE_ENV !== "production") {
 } else {
   // When in production
   // All url paths go to the bundled index.html
-  app.use(express.static(path.join(__dirname, 'build')));
+  app.use(express.static(path.join(__dirname,"client", 'build')));
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
