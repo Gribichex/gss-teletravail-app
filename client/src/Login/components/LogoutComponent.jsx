@@ -59,7 +59,7 @@ function LogoutComponent(props) {
         <Row>
           <Col>
             <Form onSubmit={handleLogout}>
-              <Button className="my-5" variant="primary" type="submit">
+              <Button className="my-5" variant="primary" style={{backgroundColor:"rgb(36,42,117)"}} type="submit">
                 Logout
               </Button>
             </Form>

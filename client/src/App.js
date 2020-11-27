@@ -4,6 +4,8 @@ import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import Home from "./Home/Home";
 import { useState } from "react";
 import Login from "./Login/Login";
+import styles from "./global.module.css"
+
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -24,7 +26,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className={styles.global}>
       <BrowserRouter>
         <Header loginStatus={isAuth} />
         <Switch>

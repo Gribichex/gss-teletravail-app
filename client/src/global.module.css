@@ -1,0 +1,9 @@
+/*.global {
+    background-image: url(./common/wallpaper.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }*/
+
+  .global {
+      color:rgb(36,42,117);
+  }

@@ -15,7 +15,7 @@ const TickDay = (props) => {
         return { background: "yellow" };
 
       case 2:
-        return { background: "green" };
+        return { background: "rgb(93,191,212" };
       case 3:
         return { background: "black" };
 

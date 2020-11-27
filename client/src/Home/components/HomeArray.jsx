@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import compareAsc from "date-fns/compareAsc";
 import parseISO from "date-fns/parseISO";
 import jwt_decode from "jwt-decode";
-
+import styles from "./HomeArray.module.css"
 
 const HomeArray = (props) => {
   const [userData, setUserData] = useState([]);
@@ -126,10 +126,10 @@ const HomeArray = (props) => {
   };
 
   const renderHeaderRow = (nbDays) => {
-    const headerRowArray = [<th key={uuidv4()}>Jour du Mois</th>];
+    const headerRowArray = [<th key={uuidv4()} className={styles.th} >Jour du Mois</th>];
 
     for (let i = 0; i < nbDays; i++) {
-      headerRowArray.push(<th key={uuidv4()}>{i + 1}</th>);
+      headerRowArray.push(<th key={uuidv4()} className={styles.th}>{(i + 1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</th>);
     }
     return headerRowArray;
   };

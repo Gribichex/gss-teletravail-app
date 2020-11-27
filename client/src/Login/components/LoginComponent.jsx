@@ -257,6 +257,7 @@ function LoginComponent(props) {
             <Button
               type="submit"
               variant="primary"
+              style={{backgroundColor:"rgb(36,42,117)"}}
               disabled={isValid ? false : true}
             >
               {!isRegistered ? "Inscription" : "Login"}
