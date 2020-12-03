@@ -13,8 +13,7 @@ const HomeArray = (props) => {
 
   //Fetch de la base de donnée avant chaque render et changement de l'état
   useEffect(() => {
-  
-    if (props.currentAuth){
+    if (props.currentAuth) {
       let department = "GSS";
       fetch("/api/users/?department=" + department, {
         method: "GET",
@@ -26,7 +25,7 @@ const HomeArray = (props) => {
         .then((result) => {
           const userEmail = result.userEmail;
           let loadedData = result.foundUsers;
-  
+
           loadedData.forEach((element) => {
             element.isActive = false;
           });
@@ -39,7 +38,7 @@ const HomeArray = (props) => {
             1,
             loadedData[userIndex]
           )[0];
-  
+
           setUserData(loadedData);
         })
         .catch((error) => {
@@ -47,7 +46,6 @@ const HomeArray = (props) => {
           history.push("/login");
         });
     }
-    
   }, []);
 
   const updateUser = (user, month, indexJour, previousStatus) => {
@@ -146,12 +144,18 @@ const HomeArray = (props) => {
   };
 
   return (
-    <Table bordered hover responsive size="sm">
-      <thead>
-        <tr>{renderHeaderRow(props.selectedDate.nbDays)}</tr>
-      </thead>
-      <tbody>{renderTableContent(userData, props.selectedDate)}</tbody>
-    </Table>
+    <div>
+      {userData && userData.length ? (
+        <Table bordered hover responsive size="sm">
+          <thead>
+            <tr>{renderHeaderRow(props.selectedDate.nbDays)}</tr>
+          </thead>
+          <tbody>{renderTableContent(userData, props.selectedDate)}</tbody>
+        </Table>
+      ) : (
+        <h1>Chargement...</h1>
+      )}
+    </div>
   );
 };
 
