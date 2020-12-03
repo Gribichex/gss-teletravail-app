@@ -101,7 +101,6 @@ function LoginComponent(props) {
       })
         .then(() => {
           props.changeAuthStatus(true);
-          console.log("status ok")
           resolve(true);
         })
         .catch((err) => {
