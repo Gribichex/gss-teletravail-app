@@ -104,6 +104,7 @@ function LoginComponent(props) {
           resolve(true);
         })
         .catch((err) => {
+          console.log(err);
           reject(new Error("Mauvais mot de passe"));
         });
     });
