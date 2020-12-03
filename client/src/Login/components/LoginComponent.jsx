@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -8,7 +7,6 @@ import * as yup from "yup";
 import { Container } from "react-bootstrap";
 
 function LoginComponent(props) {
-  const history = useHistory();
 
   const [isRegistered, setIsRegistered] = useState(false);
   const schema = yup.object({
@@ -44,7 +42,6 @@ function LoginComponent(props) {
   const CheckMailExistence = () => {
     const { values } = useFormikContext();
 
-    useEffect(() => {
       if (values.email !== "") {
         fetch("/api/users/status/" + values.email)
           .then((res) => res.json())
@@ -59,7 +56,7 @@ function LoginComponent(props) {
             }
           );
       }
-    });
+    
 
     return null;
   };
@@ -69,6 +66,7 @@ function LoginComponent(props) {
       fetch("/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify({
           firstName: values.fName,
           lastName: values.lName,
@@ -78,8 +76,6 @@ function LoginComponent(props) {
           nonWorkingDays: [],
         }),
       })
-        .then((response) => response.json())
-        .then((data) => localStorage.setItem("JWT", data.token))
         .then(() => {
           props.changeAuthStatus(true);
           resolve(true);
@@ -97,13 +93,12 @@ function LoginComponent(props) {
       fetch("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify({
           email: values.email,
           password: values.password,
         }),
       })
-        .then((response) => response.json())
-        .then((data) => localStorage.setItem("JWT", data.token))
         .then(() => {
           props.changeAuthStatus(true);
           resolve(true);
@@ -123,7 +118,6 @@ function LoginComponent(props) {
             handleLogin(values)
               .then(() => {
                 actions.setSubmitting(false);
-                history.push("/");
               })
               .catch((error) => {
                 actions.setFieldError("password", error.message);
@@ -133,7 +127,6 @@ function LoginComponent(props) {
             handleRegister(values)
               .then(() => {
                 actions.setSubmitting(false);
-                history.push("/");
               })
               .catch((error) => {
                 alert(error.message);

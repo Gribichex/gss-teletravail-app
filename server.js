@@ -1,24 +1,37 @@
 //jshint esversion:6
-const path = require('path');
 require("dotenv").config();
+
+const path = require('path');
 const express = require("express");
 const bodyParser = require("body-parser");
 var cors = require("cors");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const app = express();
-const helmet = require("helmet");
-const hpp = require("hpp");
+const cookieParser = require('cookie-parser');
+//const helmet = require("helmet");
+//const hpp = require("hpp");
 //const csurf = require("csurf");
 
 app.set("port", process.env.PORT || 3001);
-app.use(cors());
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(
+  cors({
+    origin: [
+      `${process.env.FRONT_URL}`,
+      'http://localhost:3001',
+      'https://gss-teletravail-app.herokuapp.com/',
+    ],
+    credentials: true
+  })
+);
+//app.use(cors());
+
+app.use(cookieParser());
 
 // Routes
 app.use("/", [require("./routes/auth"), require("./routes/user")]);
@@ -30,8 +43,7 @@ app.use("/", [require("./routes/auth"), require("./routes/user")]);
 /* Avoid Cross-site request forgery */
 //app.use(csurf());
 
-
-
+app.use(express.static("public"));
 if (process.env.NODE_ENV !== "production") {
   // We start a proxy to the create-react-app dev server
   app.use(express.static("public"));

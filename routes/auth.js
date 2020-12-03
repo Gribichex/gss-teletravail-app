@@ -23,7 +23,23 @@ router.post(
 // Check authentification
 
 router.get("/auth/check", authMiddleware.requireJWT, (req, res) => {
-  res.status(200).send({auth:true})
+  res.status(200).send({ auth: true });
 });
+
+// Logout
+
+router.get(
+  "/auth/logout",
+  function (req, res) {
+    res
+    .clearCookie('token')
+    .status(200)
+    .json({
+        message: 'You have logged out'
+    })
+
+  }
+  
+);
 
 module.exports = router;

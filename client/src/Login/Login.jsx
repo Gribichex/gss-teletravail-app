@@ -6,9 +6,9 @@ function Login(props) {
   return (
     <div>
       {props.currentAuth ? (
-        <LogoutComponent changeAuthStatus={props.changeAuthStatus} />
+        <LogoutComponent changeAuthStatus={props.changeAuthStatus} currentAuth={props.currentAuth}/>
       ) : (
-        <LoginComponent changeAuthStatus={props.changeAuthStatus} />
+        <LoginComponent changeAuthStatus={props.changeAuthStatus} currentAuth={props.currentAuth}/>
       )}
     </div>
   );

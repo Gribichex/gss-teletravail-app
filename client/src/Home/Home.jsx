@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
@@ -11,7 +11,17 @@ import HomeArray from "./components/HomeArray";
 import { v4 as uuidv4 } from "uuid";
 import TickDay from "./components/TickDay";
 
+import { useHistory } from "react-router-dom";
+
 const Home = (props) => {
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!props.currentAuth) {
+      history.push("/login");
+    } 
+  }, []);
+
   const nowDate = new Date();
   const [selectedDate, setSelectedDate] = useState({
     indexOfMonth: getMonth(nowDate),
@@ -43,7 +53,7 @@ const Home = (props) => {
       </Row>
       <Row className="my-5">
         <Col>
-          <HomeArray selectedDate={selectedDate} />
+          <HomeArray key={uuidv4()} selectedDate={selectedDate} currentAuth={props.currentAuth} />
         </Col>
       </Row>
       <Row className="my-5">

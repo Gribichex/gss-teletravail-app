@@ -6,10 +6,11 @@ const User = require("../model/user");
 ///////////////////////////////////Requests Targetting all Users from a specified department/////////////////////////////////////////////////////////
 router.get("/api/users",authMiddleware.requireJWT, function (req, res) {
   let department = req.query.department;
+  let userEmail  = req.user.email;
 
   User.find({ department: department }, function (err, foundUsers) {
     if (!err) {
-      res.send(foundUsers);
+      res.send({userEmail:userEmail, foundUsers:foundUsers});
     } else {
       res.send(err);
     }
@@ -51,6 +52,20 @@ router.delete("/api/users", authMiddleware.requireJWT, function (req, res) {
 });
 
 ////////////////////////////////Requests Targetting A Specific User/////////////////////////////
+
+router.get("/api/users/loggeduser",authMiddleware.requireJWT, function (req, res) {
+  
+  User.findOne({ email: req.user.email }, function (err, foundUser) {
+    
+    if (foundUser) {
+      res.send(foundUser);
+    } else {
+      res.send([]);
+      console.log("No user matching that e-mail was found.");
+    }
+  });
+});
+
 
 router.get("/api/users/:email",authMiddleware.requireJWT, function (req, res) {
   

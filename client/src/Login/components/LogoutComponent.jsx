@@ -1,72 +1,78 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { useHistory } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 
 function LogoutComponent(props) {
-  const history = useHistory();
-
   const handleLogout = (event) => {
-    localStorage.removeItem("JWT");
-    props.changeAuthStatus(false);
-    history.push("/login");
-    event.preventDefault();
+    fetch("/auth/logout", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then(() => {
+        props.changeAuthStatus(false);
+      })
+      .catch((error) => {
+        console.log("Erreur de requete serveur en faisant le logout");
+      });
   };
 
-  const [profile, setProfile] = useState({});
-  const authToken = localStorage.getItem("JWT");
-  const decodedToken = jwt_decode(authToken);
+  const [profile, setProfile] = useState("Chargement...");
+
 
   //Fetch de la base de donnée avant chaque render et changement de l'état
   useEffect(() => {
-    fetch("/api/users/" + decodedToken.email, {
+
+    fetch("/api/users/loggeduser", {
       method: "GET",
-      headers: {
-        Authorization: "Bearer " + authToken,
-      },
+      credentials: "include",
     })
       .then((res) => {
-        return res.json();
+        if (res.status === 401) {
+          throw new Error("Identification rejetée");
+        } else {
+          return res.json();
+        }
       })
       .then((resultat) => {
-        setProfile(resultat);
+        setProfile(
+          "Vous êtes loggé comme " +
+            resultat.firstName +
+            " " +
+            resultat.lastName +
+            " (" +
+            resultat.email +
+            ")"
+        );
       })
-      .catch(
-        // Remarque : il faut gérer les erreurs ici plutôt que dans
-        // un bloc catch() afin que nous n’avalions pas les exceptions
-        // dues à de véritables bugs dans les composants.
-        (error) => {
-          console.log(error);
-        }
-      );
+      .catch((error) => {
+        console.log(error);
+        props.changeAuthStatus(false);
+      });
+
   }, []);
 
   return (
-    <div>
-      <Container className="my-5">
-        <Row>
-          <Col>
-            <h1 className="my-5">
-              Vous êtes loggé comme {profile.firstName} {profile.lastName} (
-              {profile.email})
-            </h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form onSubmit={handleLogout}>
-              <Button className="my-5" variant="primary" style={{backgroundColor:"rgb(36,42,117)"}} type="submit">
-                Logout
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <Container className="my-5 ">
+      <Row>
+        <Col className="mt-5">
+          <h1 className="my-5 text-center">{profile}</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="text-center">
+          <Button
+            className="my-5"
+            variant="primary"
+            style={{ backgroundColor: "rgb(36,42,117)" }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

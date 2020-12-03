@@ -1,29 +1,35 @@
 import React from "react";
 import Header from "./common/Header";
-import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Home from "./Home/Home";
 import { useState } from "react";
 import Login from "./Login/Login";
-import styles from "./global.module.css"
-
+import styles from "./global.module.css";
+import { useEffect } from "react";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
 
-  const PrivateRoute = ({ component: Component, ...rest }) => {
-    return (
-      <Route
-        {...rest}
-        render={(props) =>
-          isAuth ? <Component {...props} /> : <Redirect to="/login" />
-        }
-      />
-    );
-  };
-
   const handleAuth = (newState) => {
     setIsAuth(newState);
   };
+
+  useEffect(() => {
+    fetch("/auth/check", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.status === 401) {
+          throw new Error("Identification rejetée");
+        }
+        setIsAuth(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsAuth(false);
+      });
+  }, []);
 
   return (
     <div className={styles.global}>
@@ -31,9 +37,11 @@ function App() {
         <Header loginStatus={isAuth} />
         <Switch>
           <Route exact path="/login">
-            <Login changeAuthStatus={handleAuth} currentAuth = {isAuth}/>
+            <Login changeAuthStatus={handleAuth} currentAuth={isAuth} />
           </Route>
-          <PrivateRoute exact path="/" component={Home} />
+          <Route exact path="/">
+            <Home changeAuthStatus={handleAuth} currentAuth={isAuth} />
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>

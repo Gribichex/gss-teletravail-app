@@ -4,68 +4,51 @@ import UserSchedule from "./UserSchedule";
 import { v4 as uuidv4 } from "uuid";
 import compareAsc from "date-fns/compareAsc";
 import parseISO from "date-fns/parseISO";
-import jwt_decode from "jwt-decode";
-import styles from "./HomeArray.module.css"
+import styles from "./HomeArray.module.css";
+import { useHistory } from "react-router-dom";
 
 const HomeArray = (props) => {
+  const history = useHistory();
   const [userData, setUserData] = useState([]);
-  let authToken = localStorage.getItem("JWT");
-  const decodedToken = jwt_decode(authToken);
 
   //Fetch de la base de donnée avant chaque render et changement de l'état
   useEffect(() => {
-    let department = "GSS";
-
-    fetch("/api/users/?department=" + department, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + authToken,
-      },
-    })
-      .then((res) => {
-        return res.json();
+  
+    if (props.currentAuth){
+      let department = "GSS";
+      fetch("/api/users/?department=" + department, {
+        method: "GET",
+        credentials: "include",
       })
-      .then(
-        (result) => {
-
-         result.forEach((element)=>{
-           element.isActive = false;
-         })
-         const userIndex =  result.findIndex((element)=>decodedToken.email===element.email)
-         result[userIndex].isActive = true;
-         result[userIndex] = result.splice(0, 1, result[userIndex])[0];
-
-          setUserData(result);
-
-      //creation des stats
-         /*
-         nbDays = props.selectedDate.nbDays;
-
-          for (let i = 0; i < nbDays; i++) {
-            let currentDate = new Date(
-              Date.UTC(month.indexOfYear, month.indexOfMonth, indexJour + 1)
-            );
-          }
-
-          const reducer = (accumulator, currentValue, idx) =>
-            accumulator + currentValue.nonWorkingDays[idx];
-
-          result;
-          let chartData = result.map((element) => {
-            return element.isActive;*/
-
-            //{ name: "Page A", uv: 400, pv: 2400, amt: 2400 }*/
-
-
-        },
-        // Remarque : il faut gérer les erreurs ici plutôt que dans
-        // un bloc catch() afin que nous n’avalions pas les exceptions
-        // dues à de véritables bugs dans les composants.
-        (error) => {
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          const userEmail = result.userEmail;
+          let loadedData = result.foundUsers;
+  
+          loadedData.forEach((element) => {
+            element.isActive = false;
+          });
+          const userIndex = loadedData.findIndex(
+            (element) => userEmail === element.email
+          );
+          loadedData[userIndex].isActive = true;
+          loadedData[userIndex] = loadedData.splice(
+            0,
+            1,
+            loadedData[userIndex]
+          )[0];
+  
+          setUserData(loadedData);
+        })
+        .catch((error) => {
           console.log(error);
-        }
-      );
-  },[]);
+          history.push("/login");
+        });
+    }
+    
+  }, []);
 
   const updateUser = (user, month, indexJour, previousStatus) => {
     const userDataCopy = [...userData];
@@ -79,7 +62,6 @@ const HomeArray = (props) => {
     const userIndex = userData.findIndex(
       (element) => element.email === user.email
     );
-
 
     const jourPoseIndex = userData[userIndex].nonWorkingDays.findIndex(
       (element) => compareAsc(parseISO(element.date), updateDate) === 0
@@ -112,24 +94,42 @@ const HomeArray = (props) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + authToken,
       },
-
+      credentials: "include",
       body: JSON.stringify({
         nonWorkingDays: userDataCopy[userIndex].nonWorkingDays,
       }),
-    }).catch(function (err) {
-      console.log(err);
-    });
-
-    setUserData((previous) => userDataCopy);
+    })
+      .then((res) => {
+        if (res.status === 401) {
+          throw new Error("Identification rejetée");
+        }
+      })
+      .then(() => {
+        setUserData((previous) => userDataCopy);
+      })
+      .catch((err) => {
+        history.push("/login");
+        console.log(err);
+      });
   };
 
   const renderHeaderRow = (nbDays) => {
-    const headerRowArray = [<th key={uuidv4()} className={styles.th} >Jour du Mois</th>];
+    const headerRowArray = [
+      <th key={uuidv4()} className={styles.th}>
+        Jour du Mois
+      </th>,
+    ];
 
     for (let i = 0; i < nbDays; i++) {
-      headerRowArray.push(<th key={uuidv4()} className={styles.th}>{(i + 1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})}</th>);
+      headerRowArray.push(
+        <th key={uuidv4()} className={styles.th}>
+          {(i + 1).toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}
+        </th>
+      );
     }
     return headerRowArray;
   };

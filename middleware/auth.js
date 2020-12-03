@@ -7,7 +7,19 @@ const jwtSecret = process.env.JWT_SECRET;
 const jwtAlgorithm = process.env.JWT_ALGO;
 const jwtExpiresIn = process.env.JWT_EXPIRE;
 
+
+var cookieExtractor = function(req) {
+    var token = null;
+    if (req && req.cookies)
+    {
+        token = req.cookies['token'];
+    }
+    return token;
+};
+
 passport.use(User.createStrategy());
+
+
 
 function register(req, res, next) {
   const user = new User({
@@ -38,7 +50,8 @@ passport.use(
     {
       // Where will the JWT be passed in the HTTP request?
       // e.g. Authorization: Bearer xxxxxxxxxx
-      jwtFromRequest: PassportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
+      //jwtFromRequest: PassportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: cookieExtractor,
       // What is the secret
       secretOrKey: jwtSecret,
       // What algorithm(s) were used to sign it?
@@ -86,7 +99,17 @@ function signJWTForUser(req, res) {
     }
   );
   // Send the token
-  res.json({ token });
+  //res.json({ token });
+
+  res.cookie('token', token, {
+    expires: new Date(Date.now() + 2*24*60*1000),
+    httpOnly: true,
+    secure: false,
+    sameSite: true
+  });
+
+  res.send('')
+
 }
 
 module.exports = {
