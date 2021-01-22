@@ -3,10 +3,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { config } from './../../Constants'
+var url = config.url.API_URL;
 
 function LogoutComponent(props) {
   const handleLogout = (event) => {
-    fetch("/auth/logout", {
+    fetch(url+"/auth/logout", {
       method: "GET",
       credentials: "include",
     })
@@ -24,7 +26,7 @@ function LogoutComponent(props) {
   //Fetch de la base de donnée avant chaque render et changement de l'état
   useEffect(() => {
 
-    fetch("/api/users/loggeduser", {
+    fetch(url+"/api/users/loggeduser", {
       method: "GET",
       credentials: "include",
     })

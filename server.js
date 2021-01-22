@@ -19,7 +19,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use(
+/*app.use(
   cors({
     origin: [
       `${process.env.FRONT_URL}`,
@@ -28,7 +28,15 @@ app.use(
     ],
     credentials: true
   })
-);
+);*/
+
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
+
+app.use(cors(corsConfig));
+
 //app.use(cors());
 
 app.use(cookieParser());

@@ -6,6 +6,8 @@ import { useState } from "react";
 import Login from "./Login/Login";
 import styles from "./global.module.css";
 import { useEffect } from "react";
+import { config } from './Constants'
+var url = config.url.API_URL;
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -15,7 +17,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch("/auth/check", {
+    fetch(url+"/auth/check", {
       method: "GET",
       credentials: "include",
     })

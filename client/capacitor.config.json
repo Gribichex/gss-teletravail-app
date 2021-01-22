@@ -1,0 +1,12 @@
+{
+  "appId": "io.ionic.gss_teletravail_app",
+  "appName": "gss_teletravail_app",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "server": {
+    "hostname": "gss-teletravail-app.herokuapp.com/",
+    "androidScheme": "https"
+  },
+  "cordova": {}
+}

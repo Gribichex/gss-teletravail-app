@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import { useFormikContext, Formik } from "formik";
 import * as yup from "yup";
 import { Container } from "react-bootstrap";
+import { config } from './../../Constants'
+var url = config.url.API_URL;
 
 function LoginComponent(props) {
 
@@ -43,7 +45,7 @@ function LoginComponent(props) {
     const { values } = useFormikContext();
 
       if (values.email !== "") {
-        fetch("/api/users/status/" + values.email)
+        fetch(url+"/api/users/status/" + values.email)
           .then((res) => res.json())
           .then(
             (result) => {
@@ -63,7 +65,7 @@ function LoginComponent(props) {
 
   const handleRegister = (values) => {
     return new Promise((resolve, reject) => {
-      fetch("/auth/register", {
+      fetch(url+"/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: 'include',
@@ -90,7 +92,7 @@ function LoginComponent(props) {
 
   const handleLogin = (values) => {
     return new Promise((resolve, reject) => {
-      fetch("/auth/login", {
+      fetch(url+"/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: 'include',

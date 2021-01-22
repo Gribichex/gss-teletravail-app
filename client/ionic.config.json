@@ -1,0 +1,7 @@
+{
+  "name": "gss_teletravail_app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

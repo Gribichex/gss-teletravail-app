@@ -104,8 +104,8 @@ function signJWTForUser(req, res) {
   res.cookie('token', token, {
     expires: new Date(Date.now() + 2*24*60*1000),
     httpOnly: true,
-    secure: false,
-    sameSite: true
+    secure: true,
+    sameSite: 'None'
   });
 
   res.send('')

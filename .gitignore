@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules/
+build/
+android/
 /.pnp
 .pnp.js
 

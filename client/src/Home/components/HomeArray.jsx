@@ -6,6 +6,8 @@ import compareAsc from "date-fns/compareAsc";
 import parseISO from "date-fns/parseISO";
 import styles from "./HomeArray.module.css";
 import { useHistory } from "react-router-dom";
+import { config } from './../../Constants'
+var url = config.url.API_URL;
 
 const HomeArray = (props) => {
   const history = useHistory();
@@ -15,7 +17,7 @@ const HomeArray = (props) => {
   useEffect(() => {
     if (props.currentAuth) {
       let department = "GSS";
-      fetch("/api/users/?department=" + department, {
+      fetch(url+"/api/users/?department=" + department, {
         method: "GET",
         credentials: "include",
       })
@@ -88,7 +90,7 @@ const HomeArray = (props) => {
     //console.log(userDataCopy);
     //console.log(JSON.stringify(userDataCopy[userIndex]));
 
-    fetch("/api/users/" + userDataCopy[userIndex].email, {
+    fetch(url+"/api/users/" + userDataCopy[userIndex].email, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
