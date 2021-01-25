@@ -16,7 +16,7 @@ const MonthPicker = (props) => {
   }
 
   return (
-    <DatePicker dateFormat="MMMM yyyy" locale={locale} selected={props.selected} onChange={handleChangeDate} showMonthYearPicker />
+    <DatePicker dateFormat="MMMM yyyy" locale={locale} selected={props.selected} onChange={handleChangeDate} showWeekMonthYearPicker />
   );
 };
 

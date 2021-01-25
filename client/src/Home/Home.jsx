@@ -7,7 +7,9 @@ import MonthPicker from "../common/MonthPicker";
 import getDaysInMonth from "date-fns/getDaysInMonth";
 import getMonth from "date-fns/getMonth";
 import getYear from "date-fns/getYear";
-import HomeArray from "./components/HomeArray";
+import getDate from "date-fns/getDate";
+import getDay from "date-fns/getDay";
+import HomeArray from "./components/HomeArray--week";
 import { v4 as uuidv4 } from "uuid";
 import TickDay from "./components/TickDay";
 
@@ -24,6 +26,8 @@ const Home = (props) => {
 
   const nowDate = new Date();
   const [selectedDate, setSelectedDate] = useState({
+    weekDay:getDay(nowDate),
+    indexOfDay: getDate(nowDate),
     indexOfMonth: getMonth(nowDate),
     indexOfYear: getYear(nowDate),
     nbDays: getDaysInMonth(nowDate),
@@ -31,11 +35,14 @@ const Home = (props) => {
 
   const handleChangeDate = (newDate) => {
     setSelectedDate({
+      weekDay:getDay(newDate),
+      indexOfDay: getDate(newDate),
       indexOfMonth: getMonth(newDate),
       indexOfYear: getYear(newDate),
       nbDays: getDaysInMonth(newDate),
     });
   };
+
   return (
     <Container fluid className="mt-5">
       <Row className="my-5">
@@ -45,7 +52,7 @@ const Home = (props) => {
             handleChangeDate={handleChangeDate}
             selected={
               new Date(
-                Date.UTC(selectedDate.indexOfYear, selectedDate.indexOfMonth)
+                Date.UTC(selectedDate.indexOfYear, selectedDate.indexOfMonth,selectedDate.indexOfDay)
               )
             }
           />
