@@ -64,7 +64,7 @@ const UserSchedule = (props) => {
   return (
     <tr>
       <td className={styles.td}>
-        {props.user.firstName} {props.user.lastName}
+        {props.user.firstName[0]}.{props.user.lastName}
       </td>
       {renderRowContent(props.user, props.selectedDate)}
     </tr>

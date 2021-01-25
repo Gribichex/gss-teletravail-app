@@ -24,8 +24,9 @@ const TickDay = (props) => {
     }
   };
 
+
   return (
-    <td className={styles.td} onClick={changeStatus} style={changeStyle()}></td>
+    <td className={ styles.td} onClick={changeStatus} style={changeStyle()}></td>
   );
 };
 

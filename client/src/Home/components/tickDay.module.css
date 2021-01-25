@@ -1,3 +1,4 @@
 .td {
-  width: 45px;
-}
+    min-width: 45px;
+    font-weight: bold;
+  }

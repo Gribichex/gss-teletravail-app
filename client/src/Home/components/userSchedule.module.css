@@ -1,5 +1,8 @@
 .td {
-  width: 90px;
-  white-space: nowrap;
   font-weight: bold;
+}
+
+
+.td:first-child {
+  border: solid;
 }
