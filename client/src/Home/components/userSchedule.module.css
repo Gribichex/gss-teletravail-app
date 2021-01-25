@@ -1,8 +1,12 @@
 .td {
+  white-space: nowrap;
   font-weight: bold;
 }
 
-
 .td:first-child {
-  border: solid;
+  position: sticky;
+  left: 0px;
+  background-color:rgb(214, 215, 231);
 }
+
+
