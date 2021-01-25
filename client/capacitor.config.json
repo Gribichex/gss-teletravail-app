@@ -5,7 +5,6 @@
   "npmClient": "npm",
   "webDir": "build",
   "server": {
-    "hostname": "gss-teletravail-app.herokuapp.com/",
     "androidScheme": "https"
   },
   "cordova": {}

@@ -1,6 +1,7 @@
 const passport = require("passport");
 const JWT = require("jsonwebtoken");
 const PassportJwt = require("passport-jwt");
+require("dotenv").config();
 const User = require("../model/user");
 
 const jwtSecret = process.env.JWT_SECRET;
@@ -101,12 +102,23 @@ function signJWTForUser(req, res) {
   // Send the token
   //res.json({ token });
 
-  res.cookie('token', token, {
+  if (process.env.NODE_ENV !== "production")
+  {
+    res.cookie('token', token, {
+    expires: new Date(Date.now() + 2*24*60*1000),
+    httpOnly: true,
+    secure: false,
+    sameSite: true
+  });
+  }else{
+    res.cookie('token', token, {
     expires: new Date(Date.now() + 2*24*60*1000),
     httpOnly: true,
     secure: true,
     sameSite: 'None'
   });
+  }
+
 
   res.send('')
 
