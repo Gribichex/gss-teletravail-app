@@ -9,11 +9,14 @@ import getMonth from "date-fns/getMonth";
 import getYear from "date-fns/getYear";
 import getDate from "date-fns/getDate";
 import getDay from "date-fns/getDay";
+import addDays from 'date-fns/fp/addDays'
+import startOfWeek from "date-fns/fp/startOfWeek";
 import HomeArray from "./components/HomeArray--week";
 import { v4 as uuidv4 } from "uuid";
 import TickDay from "./components/TickDay";
-
 import { useHistory } from "react-router-dom";
+import format from "date-fns/format";
+import fr from "date-fns/locale/fr";
 
 const Home = (props) => {
   const history = useHistory();
@@ -21,12 +24,12 @@ const Home = (props) => {
   useEffect(() => {
     if (!props.currentAuth) {
       history.push("/login");
-    } 
+    }
   }, []);
 
   const nowDate = new Date();
   const [selectedDate, setSelectedDate] = useState({
-    weekDay:getDay(nowDate),
+    weekDay: getDay(nowDate),
     indexOfDay: getDate(nowDate),
     indexOfMonth: getMonth(nowDate),
     indexOfYear: getYear(nowDate),
@@ -35,7 +38,7 @@ const Home = (props) => {
 
   const handleChangeDate = (newDate) => {
     setSelectedDate({
-      weekDay:getDay(newDate),
+      weekDay: getDay(newDate),
       indexOfDay: getDate(newDate),
       indexOfMonth: getMonth(newDate),
       indexOfYear: getYear(newDate),
@@ -43,24 +46,43 @@ const Home = (props) => {
     });
   };
 
+  const DateFormated = new Date(
+    Date.UTC(
+      selectedDate.indexOfYear,
+      selectedDate.indexOfMonth,
+      selectedDate.indexOfDay
+    )
+  );
+
   return (
     <Container fluid className="mt-5">
       <Row className="my-5">
-        <Col>
+        <Col className="text-center m-3">
           <MonthPicker
             key={uuidv4()}
             handleChangeDate={handleChangeDate}
-            selected={
-              new Date(
-                Date.UTC(selectedDate.indexOfYear, selectedDate.indexOfMonth,selectedDate.indexOfDay)
-              )
-            }
+            selected={DateFormated}
           />
+        </Col>
+        <Col className="text-center m-3">
+          <h1>
+            {format(DateFormated, "'Semaine ' ww") +
+              format(addDays(1)(startOfWeek(DateFormated)), "' du ' EEEE dd MMMM", {
+                locale: fr,
+              }) +
+              format(addDays(7)(startOfWeek(DateFormated)), "' au ' EEEE dd MMMM", {
+                locale: fr,
+              })}
+          </h1>
         </Col>
       </Row>
       <Row className="my-5">
         <Col>
-          <HomeArray key={uuidv4()} selectedDate={selectedDate} currentAuth={props.currentAuth} />
+          <HomeArray
+            key={uuidv4()}
+            selectedDate={selectedDate}
+            currentAuth={props.currentAuth}
+          />
         </Col>
       </Row>
       <Row className="my-5">

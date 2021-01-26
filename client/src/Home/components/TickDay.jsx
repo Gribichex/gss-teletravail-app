@@ -9,18 +9,18 @@ const TickDay = (props) => {
   const changeStyle = () => {
     switch (props.status) {
       case 0:
-        return { background: "white" };
+        return { background: "mediumseagreen" };
 
       case 1:
-        return { background: "yellow" };
+        return { background: "gold" };
 
       case 2:
-        return { background: "rgb(93,191,212" };
+        return { background: "white" };
       case 3:
         return { background: "black" };
 
       default:
-        return { background: "white" };
+        return { background: "mediumseagreen" };
     }
   };
 

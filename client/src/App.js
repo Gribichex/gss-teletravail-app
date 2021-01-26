@@ -7,6 +7,7 @@ import Login from "./Login/Login";
 import styles from "./global.module.css";
 import { useEffect } from "react";
 import { config } from './Constants'
+import "bootstrap/dist/css/bootstrap.min.css";
 var url = config.url.API_URL;
 
 function App() {
