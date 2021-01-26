@@ -55,9 +55,10 @@ const Home = (props) => {
   );
 
   return (
-    <Container fluid className="mt-5">
+    <Container style={{maxWidth:"1200px"}} fluid className="mt-5">
+     <Jumbotron>
       <Row>
-        <Col className="mx-1 my-3 text-center">
+        <Col className="my-3 text-center">
           <MonthPicker
             key={uuidv4()}
             handleChangeDate={handleChangeDate}
@@ -66,7 +67,7 @@ const Home = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col className="mx-1 my-3 text-center">
+        <Col className=" my-3 text-center">
           <h1>
             {format(DateFormated, "'Semaine ' ww") +
               format(
@@ -86,95 +87,75 @@ const Home = (props) => {
           </h1>
         </Col>
       </Row>
-      <Row >
-        <Col className="mx-1 my-3">
+     
+      <Row>
+      
+        <Col md={9} className=" my-3">
           <HomeArray
             key={uuidv4()}
             selectedDate={selectedDate}
             currentAuth={props.currentAuth}
           />
         </Col>
-      </Row>
-      <Row>
-        <Col className="m-1">
-          <Jumbotron fluid>
-            <Container>
-              <Row>
-                <Col md>
-                  <h1>
-                    {" "}
-                    Planning GSS{" "}
-                    {new Date(
-                      selectedDate.indexOfYear,
-                      selectedDate.indexOfMonth
-                    ).toLocaleDateString("fr-FR", {
-                      year: "numeric",
-                      month: "long",
-                    })}
-                  </h1>
-                </Col>
-                <Col md></Col>
-                <Col md>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>Jour sur site</td>
-                        <TickDay
-                          {...props}
-                          key={uuidv4()}
-                          indexJour={0}
-                          isClickable={false}
-                          status={0}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Jour en télétravail</td>
-                        <TickDay
-                          {...props}
-                          key={uuidv4()}
-                          indexJour={1}
-                          isClickable={false}
-                          status={1}
-                        />
-                      </tr>
-                      <tr>
-                        <td>En mission</td>
-                        <TickDay
-                          {...props}
-                          key={uuidv4()}
-                          indexJour={0}
-                          isClickable={false}
-                          status={2}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Jour de congé</td>
-                        <TickDay
-                          {...props}
-                          key={uuidv4()}
-                          indexJour={0}
-                          isClickable={false}
-                          status={3}
-                        />
-                      </tr>
-                      <tr>
-                        <td>Week-end</td>
-                        <TickDay
-                          {...props}
-                          key={uuidv4()}
-                          indexJour={0}
-                          isClickable={false}
-                          status={4}
-                        />
-                      </tr>
-                    </tbody>
-                  </table>
-                </Col>
-              </Row>
-            </Container>
-          </Jumbotron>
+        <Col className="my-4">
+          <table>
+            <tbody>
+              <tr>
+                <td>Jour sur site</td>
+                <TickDay
+                  {...props}
+                  key={uuidv4()}
+                  indexJour={0}
+                  isClickable={false}
+                  status={0}
+                />
+              </tr>
+              <tr>
+                <td>Jour en télétravail</td>
+                <TickDay
+                  {...props}
+                  key={uuidv4()}
+                  indexJour={1}
+                  isClickable={false}
+                  status={1}
+                />
+              </tr>
+              <tr>
+                <td>En mission</td>
+                <TickDay
+                  {...props}
+                  key={uuidv4()}
+                  indexJour={0}
+                  isClickable={false}
+                  status={2}
+                />
+              </tr>
+              <tr>
+                <td>Jour de congé</td>
+                <TickDay
+                  {...props}
+                  key={uuidv4()}
+                  indexJour={0}
+                  isClickable={false}
+                  status={3}
+                />
+              </tr>
+              <tr>
+                <td>Week-end</td>
+                <TickDay
+                  {...props}
+                  key={uuidv4()}
+                  indexJour={0}
+                  isClickable={false}
+                  status={4}
+                />
+              </tr>
+            </tbody>
+          </table>
         </Col>
+        
       </Row>
+      </Jumbotron>
     </Container>
   );
 };

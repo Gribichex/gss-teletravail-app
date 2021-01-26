@@ -136,7 +136,7 @@ const HomeArray = (props) => {
 
       let currentIndexOfDay = indexOfDay-weekDay+i;
       let currentDate = new Date(indexOfYear,indexOfMonth,currentIndexOfDay)
-      let currentDateString = format(currentDate, 'EEEE dd',{ locale: fr })
+      let currentDateString = format(currentDate, 'EE dd',{ locale: fr })
 
       headerRowArray.push(
         <th key={uuidv4()} className={styles.th}>
