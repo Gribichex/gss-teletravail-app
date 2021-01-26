@@ -5,17 +5,22 @@ import locale from "date-fns/locale/fr";
 
 import "react-datepicker/dist/react-datepicker.css";
 
+class ExampleCustomInput extends React.Component {
+  render() {
+    return (
+      <Button
+        variant="outline-primary"
+        size="lg"
+        style={{ backgroundColor: "rgb(36,42,117)", color: "white" }}
+        onClick={this.props.onClick}
+      >
+        {this.props.value}
+      </Button>
+    );
+  }
+}
+
 const MonthPicker = (props) => {
-  const ExampleCustomInput = ({ value, onClick }) => (
-    <Button
-      variant="outline-primary"
-      size="lg"
-      style={{ backgroundColor: "rgb(36,42,117)", color: "white" }}
-      onClick={onClick}
-    >
-      {value}
-    </Button>
-  );
   const handleChangeDate = (date) => {
     props.handleChangeDate(date);
   };
@@ -26,6 +31,7 @@ const MonthPicker = (props) => {
       locale={locale}
       selected={props.selected}
       onChange={handleChangeDate}
+      popperPlacement="bottom"
       showWeekNumbers
       customInput={<ExampleCustomInput />}
     />

@@ -3,13 +3,14 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useFormikContext, Formik } from "formik";
+import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { Container } from "react-bootstrap";
 import { config } from './../../Constants'
 var url = config.url.API_URL;
 
 function LoginComponent(props) {
-
+  const history = useHistory();
   const [isRegistered, setIsRegistered] = useState(false);
   const schema = yup.object({
     fName: yup.string().when("$isRegistered", {
@@ -101,11 +102,15 @@ function LoginComponent(props) {
           password: values.password,
         }),
       })
-        .then(() => {
+        .then((response) => {
+          if(response.status!==200)
+       {
+          throw new Error(response.status)
+       }
           props.changeAuthStatus(true);
           resolve(true);
         })
-        .catch((err) => {
+        .catch(() => {
           reject(new Error("Mauvais mot de passe"));
         });
     });
@@ -120,15 +125,17 @@ function LoginComponent(props) {
             handleLogin(values)
               .then(() => {
                 actions.setSubmitting(false);
+                history.push("/");
               })
               .catch((error) => {
-                actions.setFieldError("password", error.message);
+                alert(error.message);
                 actions.setSubmitting(false);
               });
           } else {
             handleRegister(values)
               .then(() => {
                 actions.setSubmitting(false);
+                history.push("/");
               })
               .catch((error) => {
                 alert(error.message);
