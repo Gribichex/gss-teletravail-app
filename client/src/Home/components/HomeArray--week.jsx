@@ -61,8 +61,8 @@ const HomeArray = (props) => {
 
   const updateUser = (user, month, indexJour, previousStatus) => {
     const userDataCopy = [...userData];
-
-    let newStatus = (previousStatus + 1) % 3;
+    console.log(previousStatus);
+    let newStatus = (previousStatus + 1) % 4;
 
     const updateDate = new Date(
       Date.UTC(month.indexOfYear, month.indexOfMonth, indexJour + 1)
@@ -163,7 +163,7 @@ const HomeArray = (props) => {
   return (
     <div>
       {userData && userData.length ? (
-        <Table bordered hover responsive size="sm">
+        <Table variant="dark" bordered hover responsive size="sm">
           <thead>
             <tr>{renderHeaderRow(props.selectedDate)}</tr>
           </thead>

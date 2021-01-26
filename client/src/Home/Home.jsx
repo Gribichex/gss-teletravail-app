@@ -57,7 +57,7 @@ const Home = (props) => {
   return (
     <Container fluid className="mt-5">
       <Row>
-        <Col className="m-3">
+        <Col className="mx-1 my-3 text-center">
           <MonthPicker
             key={uuidv4()}
             handleChangeDate={handleChangeDate}
@@ -66,7 +66,7 @@ const Home = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col className="m-3 text-center">
+        <Col className="mx-1 my-3 text-center">
           <h1>
             {format(DateFormated, "'Semaine ' ww") +
               format(
@@ -86,8 +86,8 @@ const Home = (props) => {
           </h1>
         </Col>
       </Row>
-      <Row>
-        <Col className="m-3">
+      <Row >
+        <Col className="mx-1 my-3">
           <HomeArray
             key={uuidv4()}
             selectedDate={selectedDate}
@@ -96,7 +96,7 @@ const Home = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col className="m-3">
+        <Col className="m-1">
           <Jumbotron fluid>
             <Container>
               <Row>
@@ -138,7 +138,7 @@ const Home = (props) => {
                         />
                       </tr>
                       <tr>
-                        <td>Jour de congé</td>
+                        <td>En mission</td>
                         <TickDay
                           {...props}
                           key={uuidv4()}
@@ -148,13 +148,23 @@ const Home = (props) => {
                         />
                       </tr>
                       <tr>
-                        <td>Week-end</td>
+                        <td>Jour de congé</td>
                         <TickDay
                           {...props}
                           key={uuidv4()}
                           indexJour={0}
                           isClickable={false}
                           status={3}
+                        />
+                      </tr>
+                      <tr>
+                        <td>Week-end</td>
+                        <TickDay
+                          {...props}
+                          key={uuidv4()}
+                          indexJour={0}
+                          isClickable={false}
+                          status={4}
                         />
                       </tr>
                     </tbody>

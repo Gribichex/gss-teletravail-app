@@ -3,7 +3,14 @@ import styles from "./tickDay.module.css";
 
 const TickDay = (props) => {
   const changeStatus = () => {
-    if (props.isClickable) {props.updateUser(props.user, props.selectedDate, props.indexJour,props.status)}
+    if (props.isClickable) {
+      props.updateUser(
+        props.user,
+        props.selectedDate,
+        props.indexJour,
+        props.status
+      );
+    }
   };
 
   const changeStyle = () => {
@@ -15,18 +22,18 @@ const TickDay = (props) => {
         return { background: "gold" };
 
       case 2:
-        return { background: "white" };
+        return { background: "sandybrown" };
       case 3:
+        return { background: "white" };
+      case 4:
         return { background: "black" };
-
       default:
         return { background: "mediumseagreen" };
     }
   };
 
-
   return (
-    <td className={ styles.td} onClick={changeStatus} style={changeStyle()}></td>
+    <td className={styles.td} onClick={changeStatus} style={changeStyle()}></td>
   );
 };
 

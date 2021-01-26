@@ -21,7 +21,7 @@ const UserSchedule = (props) => {
       //console.log("La date pour la case "+indexJour+" est "+currentCaseDate);
 
     if (isWeekend(currentCaseDate)) {
-      return 3;
+      return 4;
     }
 
     for (let i = 0; i < nonWorkingDays.length; i++) {
@@ -53,7 +53,7 @@ const UserSchedule = (props) => {
           {...props}
           key={uuidv4()}
           indexJour={currentIndexOfDay}
-          isClickable = {checkDayStatus(currentIndexOfDay, selectedDate, nonWorkingDays)!==3 && props.user.isActive}
+          isClickable = {checkDayStatus(currentIndexOfDay, selectedDate, nonWorkingDays)!==4 && props.user.isActive}
           status={checkDayStatus(currentIndexOfDay, selectedDate, nonWorkingDays)}
         />
       );
