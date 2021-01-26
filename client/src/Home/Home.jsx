@@ -9,7 +9,7 @@ import getMonth from "date-fns/getMonth";
 import getYear from "date-fns/getYear";
 import getDate from "date-fns/getDate";
 import getDay from "date-fns/getDay";
-import addDays from 'date-fns/fp/addDays'
+import addDays from "date-fns/fp/addDays";
 import startOfWeek from "date-fns/fp/startOfWeek";
 import HomeArray from "./components/HomeArray--week";
 import { v4 as uuidv4 } from "uuid";
@@ -56,28 +56,38 @@ const Home = (props) => {
 
   return (
     <Container fluid className="mt-5">
-      <Row className="my-5">
-        <Col className="text-center m-3">
+      <Row>
+        <Col className="m-3">
           <MonthPicker
             key={uuidv4()}
             handleChangeDate={handleChangeDate}
             selected={DateFormated}
           />
         </Col>
-        <Col className="text-center m-3">
+      </Row>
+      <Row>
+        <Col className="m-3 text-center">
           <h1>
             {format(DateFormated, "'Semaine ' ww") +
-              format(addDays(1)(startOfWeek(DateFormated)), "' du ' EEEE dd MMMM", {
-                locale: fr,
-              }) +
-              format(addDays(7)(startOfWeek(DateFormated)), "' au ' EEEE dd MMMM", {
-                locale: fr,
-              })}
+              format(
+                addDays(1)(startOfWeek(DateFormated)),
+                "' du ' EEEE dd MMMM",
+                {
+                  locale: fr,
+                }
+              ) +
+              format(
+                addDays(7)(startOfWeek(DateFormated)),
+                "' au ' EEEE dd MMMM",
+                {
+                  locale: fr,
+                }
+              )}
           </h1>
         </Col>
       </Row>
-      <Row className="my-5">
-        <Col>
+      <Row>
+        <Col className="m-3">
           <HomeArray
             key={uuidv4()}
             selectedDate={selectedDate}
@@ -85,8 +95,8 @@ const Home = (props) => {
           />
         </Col>
       </Row>
-      <Row className="my-5">
-        <Col>
+      <Row>
+        <Col className="m-3">
           <Jumbotron fluid>
             <Container>
               <Row>
