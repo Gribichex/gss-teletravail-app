@@ -65,7 +65,7 @@ function LogoutComponent(props) {
       <Row>
         <Col className="text-center">
           <Button
-            className="my-5"
+            size="lg"
             variant="primary"
             style={{ backgroundColor: "rgb(36,42,117)" }}
             onClick={handleLogout}
