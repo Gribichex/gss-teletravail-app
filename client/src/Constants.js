@@ -3,7 +3,7 @@
 // Constants.js
 const prod = {
  url: {
-  API_URL: "https://gss-teletravail-app.herokuapp.com"
+  API_URL: "https://teletravapp.herokuapp.com"
   }
 };
 const dev = {

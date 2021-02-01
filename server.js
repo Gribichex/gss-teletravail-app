@@ -24,7 +24,7 @@ app.use(bodyParser.json());
     origin: [
       `${process.env.FRONT_URL}`,
       'http://localhost:3001',
-      'https://gss-teletravail-app.herokuapp.com/',
+      'https://teletravapp.herokuapp.com/',
     ],
     credentials: true
   })

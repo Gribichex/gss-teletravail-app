@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.gss_teletravail_app",
-  "appName": "gss_teletravail_app",
+  "appId": "io.ionic.teletravapp",
+  "appName": "teletravapp",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
