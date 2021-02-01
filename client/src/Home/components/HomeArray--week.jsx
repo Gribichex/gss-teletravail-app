@@ -61,7 +61,6 @@ const HomeArray = (props) => {
 
   const updateUser = (user, month, indexJour, previousStatus) => {
     const userDataCopy = [...userData];
-    console.log(previousStatus);
     let newStatus = (previousStatus + 1) % 4;
 
     const updateDate = new Date(

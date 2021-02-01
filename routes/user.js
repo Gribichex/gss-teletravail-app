@@ -97,7 +97,6 @@ router.get("/api/users/status/:email", function (req, res) {
 
 
 router.put("/api/users/:email", authMiddleware.requireJWT, function (req, res) {
-  console.log(req.body);
 
   User.replaceOne(
     { mail: req.params.email },

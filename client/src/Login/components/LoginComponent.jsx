@@ -53,8 +53,6 @@ function LoginComponent(props) {
           (result) => {
             if (result !== undefined) {
               if (result.userExist !== isRegistered) {
-                
-                console.log("je pass ici");
                 setIsRegistered(result.userExist);
               }
             }
