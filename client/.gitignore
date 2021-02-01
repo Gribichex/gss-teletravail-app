@@ -1,8 +1,18 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# resources
+resources/android/icon
+resources/android/splash
+resources/ios/icon
+resources/ios/splash
+resources/windows/icon
+resources/windows/splash
+
 # dependencies
 node_modules/
 build/
+android/
+
 # testing
 /coverage
 

@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
@@ -14,9 +14,10 @@ import startOfWeek from "date-fns/fp/startOfWeek";
 import HomeArray from "./components/HomeArray--week";
 import { v4 as uuidv4 } from "uuid";
 import TickDay from "./components/TickDay";
-
+import Button from "react-bootstrap/Button";
 import format from "date-fns/format";
 import fr from "date-fns/locale/fr";
+import { useHistory } from "react-router-dom";
 
 const Home = (props) => {
   const nowDate = new Date();
@@ -36,6 +37,12 @@ const Home = (props) => {
       indexOfYear: getYear(newDate),
       nbDays: getDaysInMonth(newDate),
     });
+  };
+
+  const history = useHistory();
+
+  const handleRedirect = () => {
+    history.push("/login");
   };
 
   const DateFormated = new Date(
@@ -148,7 +155,19 @@ const Home = (props) => {
           </Row>
         </Jumbotron>
       ) : (
-        <h1 className="text-center">Il faut vous identifier !</h1>
+        <>
+          <h1 className="text-center">Il faut vous identifier !</h1>
+          <p className="text-center my-5">
+            <Button
+              size="lg"
+              variant="primary"
+              style={{ backgroundColor: "rgb(36,42,117)" }}
+              onClick={handleRedirect}
+            >
+              Login/Inscription
+            </Button>
+          </p>
+        </>
       )}
     </Container>
   );
