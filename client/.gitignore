@@ -3,10 +3,6 @@
 # dependencies
 node_modules/
 
-android/
-/.pnp
-.pnp.js
-
 # testing
 /coverage
 
