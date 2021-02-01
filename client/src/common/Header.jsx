@@ -10,7 +10,7 @@ const Header = (props) => {
     <Navbar className={styles.navbar} variant="dark" expand="lg" collapseOnSelect>
       <LinkContainer to="/">
         <Navbar.Brand>
-          <img className={styles.img} src={Logo} alt="logo"></img>
+          <img className={styles.img} src={Logo} alt="logo" width="1600px" height="900px"></img>
         </Navbar.Brand>
       </LinkContainer>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />

@@ -1,10 +1,12 @@
 .navbar {
-    font-size: calc(1vw + 1rem);
-    background-color: rgb(36,42,117);
-    text-align: right;
-    padding: 1vw;
+  font-size: calc(1vw + 1rem);
+  background-color: rgb(36, 42, 117);
+  text-align: right;
+  padding: 1vw;
 }
 
-.img{
-    height:calc(2vw + 1rem);
+.img {
+  width: 100%;
+  height: auto;
+  max-width:30vw;
 }
