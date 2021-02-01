@@ -1,14 +1,17 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import Header from "./common/Header";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
-import Home from "./Home/Home";
+
 import { useState } from "react";
-import Login from "./Login/Login";
+
 import styles from "./global.module.css";
 import { useEffect } from "react";
-import { config } from './Constants'
+import { config } from "./Constants";
 import "bootstrap/dist/css/bootstrap.min.css";
 var url = config.url.API_URL;
+
+const Home = lazy(() => import("./Home/Home"));
+const Login = lazy(() => import("./Login/Login"));
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -18,7 +21,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch(url+"/auth/check", {
+    fetch(url + "/auth/check", {
       method: "GET",
       credentials: "include",
     })
@@ -38,14 +41,16 @@ function App() {
     <div className={styles.global}>
       <BrowserRouter>
         <Header loginStatus={isAuth} />
-        <Switch>
-          <Route exact path="/login">
-            <Login changeAuthStatus={handleAuth} currentAuth={isAuth} />
-          </Route>
-          <Route exact path="/">
-            <Home changeAuthStatus={handleAuth} currentAuth={isAuth} />
-          </Route>
-        </Switch>
+        <Suspense fallback={<div>Chargement...</div>}>
+          <Switch>
+            <Route exact path="/login">
+              <Login changeAuthStatus={handleAuth} currentAuth={isAuth} />
+            </Route>
+            <Route exact path="/">
+              <Home changeAuthStatus={handleAuth} currentAuth={isAuth} />
+            </Route>
+          </Switch>
+        </Suspense>
       </BrowserRouter>
     </div>
   );

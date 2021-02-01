@@ -6,12 +6,13 @@ import { useFormikContext, Formik } from "formik";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { Container } from "react-bootstrap";
-import { config } from './../../Constants'
+import { config } from "./../../Constants";
 var url = config.url.API_URL;
 
 function LoginComponent(props) {
   const history = useHistory();
   const [isRegistered, setIsRegistered] = useState(false);
+
   const schema = yup.object({
     fName: yup.string().when("$isRegistered", {
       is: true,
@@ -45,31 +46,34 @@ function LoginComponent(props) {
   const CheckMailExistence = () => {
     const { values } = useFormikContext();
 
-      if (values.email !== "") {
-        fetch(url+"/api/users/status/" + values.email)
-          .then((res) => res.json())
-          .then(
-            (result) => {
-              if (result !== undefined) {
+    if (values.email !== "") {
+      fetch(url + "/api/users/status/" + values.email)
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            if (result !== undefined) {
+              if (result.userExist !== isRegistered) {
+                
+                console.log("je pass ici");
                 setIsRegistered(result.userExist);
               }
-            },
-            (error) => {
-              console.log(error);
             }
-          );
-      }
-    
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
 
     return null;
   };
 
   const handleRegister = (values) => {
     return new Promise((resolve, reject) => {
-      fetch(url+"/auth/register", {
+      fetch(url + "/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           firstName: values.fName,
           lastName: values.lName,
@@ -93,20 +97,19 @@ function LoginComponent(props) {
 
   const handleLogin = (values) => {
     return new Promise((resolve, reject) => {
-      fetch(url+"/auth/login", {
+      fetch(url + "/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           email: values.email,
           password: values.password,
         }),
       })
         .then((response) => {
-          if(response.status!==200)
-       {
-          throw new Error(response.status)
-       }
+          if (response.status !== 200) {
+            throw new Error(response.status);
+          }
           props.changeAuthStatus(true);
           resolve(true);
         })
@@ -259,7 +262,7 @@ function LoginComponent(props) {
             <Button
               type="submit"
               variant="primary"
-              style={{backgroundColor:"rgb(36,42,117)"}}
+              style={{ backgroundColor: "rgb(36,42,117)" }}
               disabled={isValid ? false : true}
             >
               {!isRegistered ? "Inscription" : "Login"}
