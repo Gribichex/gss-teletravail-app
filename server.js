@@ -7,7 +7,9 @@ const bodyParser = require("body-parser");
 var cors = require("cors");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const app = express();
+const compression = require('compression');
 const cookieParser = require('cookie-parser');
+
 //const helmet = require("helmet");
 //const hpp = require("hpp");
 //const csurf = require("csurf");
@@ -43,6 +45,9 @@ app.use(cookieParser());
 
 // Routes
 app.use("/", [require("./routes/auth"), require("./routes/user")]);
+
+// Compress all HTTP responses
+app.use(compression());
 
 /* Set Security Configs */
 //app.use(helmet());
