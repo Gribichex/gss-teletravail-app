@@ -7,70 +7,12 @@ import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { Container } from "react-bootstrap";
 import { config } from "./../../Constants";
-import Spinner from "react-bootstrap/Spinner";
-import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 
 var url = config.url.API_URL;
 
 function LoginComponent(props) {
   const history = useHistory();
   const [isRegistered, setIsRegistered] = useState(false);
-
-  const isAvailable = () => {
-    const timeout = new Promise((resolve, reject) => {
-      setTimeout(reject, 20000, "Request timed out");
-    });
-
-    const request = fetch(url + "/api/users/status/test@test.com")
-      .then((res) => {
-        if (res.status >= 200 && res.status < 300) {
-          return res;
-        } else {
-          let err = new Error(res.statusText);
-          err.response = res;
-          throw err;
-        }
-      })
-      .then(() => {
-        return true;
-      })
-
-
-    return Promise.race([timeout, request]).catch(() =>
-      alert(
-        "Le serveur de donnée (gratuit) est en cours de démarrage...Rechargez cette page une ou deux fois puis prévenez JPP"
-      )
-    );
-  };
-
-  let test = trackPromise(isAvailable());
-
-  const LoadingSpinerComponent = (props) => {
-    const { promiseInProgress } = usePromiseTracker();
-    const { isValid } = useFormikContext();
-
-    let serverIsUp = false;
-    test.then((res) => {
-      serverIsUp= res;
-    });
-
-
-    return (
-      <div style={{ display: "flex" }}>
-        {promiseInProgress === true ? (
-          <Spinner className="mr-3" animation="border" variant="primary" />
-        ) : null}
-        <Button
-          type="submit"
-          variant="primary"
-          style={{ backgroundColor: "rgb(36,42,117)" }}
-          disabled={isValid&&serverIsUp ? false : true}
-        >
-          {!isRegistered ? "Inscription" : "Login"}
-        </Button>
-      </div>
-    );
-  };
 
   const schema = yup.object({
     fName: yup.string().when("$isRegistered", {
@@ -316,7 +258,14 @@ function LoginComponent(props) {
                 </Form.Group>
               ) : null}
             </Form.Row>
-            <LoadingSpinerComponent />
+            <Button
+              type="submit"
+              variant="primary"
+              style={{ backgroundColor: "rgb(36,42,117)" }}
+              disabled={isValid ? false : true}
+            >
+              {!isRegistered ? "Inscription" : "Login"}
+            </Button>
 
             <CheckMailExistence />
           </Form>
