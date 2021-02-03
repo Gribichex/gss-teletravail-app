@@ -21,20 +21,39 @@ function LoginComponent(props) {
       setTimeout(reject, 20000, "Request timed out");
     });
 
-    const request = fetch(url + "/api/users/status/test@test.com");
+    const request = fetch(url + "/api/users/status/test@test.com")
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          return res;
+        } else {
+          let err = new Error(res.statusText);
+          err.response = res;
+          throw err;
+        }
+      })
+      .then(() => {
+        return true;
+      })
+
 
     return Promise.race([timeout, request]).catch(() =>
       alert(
-        "Le serveur de donnée (gratuit) est en cours de démarrage...Re-essayez une ou deux fois puis prévenez JPP"
+        "Le serveur de donnée (gratuit) est en cours de démarrage...Rechargez cette page une ou deux fois puis prévenez JPP"
       )
     );
   };
 
- trackPromise(isAvailable());
+  let test = trackPromise(isAvailable());
 
   const LoadingSpinerComponent = (props) => {
     const { promiseInProgress } = usePromiseTracker();
     const { isValid } = useFormikContext();
+
+    let serverIsUp = false;
+    test.then((res) => {
+      serverIsUp= res;
+    });
+
 
     return (
       <div style={{ display: "flex" }}>
@@ -45,7 +64,7 @@ function LoginComponent(props) {
           type="submit"
           variant="primary"
           style={{ backgroundColor: "rgb(36,42,117)" }}
-          disabled={isValid && isAvailable ? false : true}
+          disabled={isValid&&serverIsUp ? false : true}
         >
           {!isRegistered ? "Inscription" : "Login"}
         </Button>
