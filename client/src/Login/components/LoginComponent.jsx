@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -25,7 +25,7 @@ function LoginComponent(props) {
 
     return Promise.race([timeout, request]).catch(() =>
       alert(
-        "Le serveur de donnée est indisponible...Revenir plus tard ou prévenir JPP"
+        "Le serveur de donnée (gratuit) est en cours de démarrage...Re-essayez ou prévenez JPP"
       )
     );
   };
@@ -34,12 +34,32 @@ function LoginComponent(props) {
 
   const LoadingSpinerComponent = (props) => {
     const { promiseInProgress } = usePromiseTracker();
-
+    const { isValid } = useFormikContext();
     return (
       <div>
         {promiseInProgress === true ? (
-          <Spinner className="mr-3" animation="border" variant="primary" />
-        ) : null}
+          <div style={{ display: "flex" }}>
+            <Spinner className="mr-3" animation="border" variant="primary" />
+            <Button
+              type="submit"
+              variant="primary"
+              style={{ backgroundColor: "rgb(36,42,117)" }}
+             disabled
+            >
+              {!isRegistered ? "Inscription" : "Login"}
+            </Button>
+          </div>
+        ) :           <div style={{ display: "flex" }}>
+            
+            <Button
+              type="submit"
+              variant="primary"
+              style={{ backgroundColor: "rgb(36,42,117)" }}
+             disabled={isValid ? false : true}
+            >
+              {!isRegistered ? "Inscription" : "Login"}
+            </Button>
+          </div>}
       </div>
     );
   };
@@ -288,17 +308,7 @@ function LoginComponent(props) {
                 </Form.Group>
               ) : null}
             </Form.Row>
-            <div style={{ display: "flex" }}>
-              <LoadingSpinerComponent />
-              <Button
-                type="submit"
-                variant="primary"
-                style={{ backgroundColor: "rgb(36,42,117)" }}
-                disabled={isValid ? false : true}
-              >
-                {!isRegistered ? "Inscription" : "Login"}
-              </Button>
-            </div>
+            <LoadingSpinerComponent />
 
             <CheckMailExistence />
           </Form>
