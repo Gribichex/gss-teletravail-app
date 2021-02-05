@@ -3,30 +3,31 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { config } from './../../Constants'
+import { config } from "../../Constants";
 var url = config.url.API_URL;
 
 function LogoutComponent(props) {
-  const handleLogout = (event) => {
-    fetch(url+"/auth/logout", {
+  const handleLogout = () => {
+    return fetch(url + "/auth/logout", {
       method: "GET",
       credentials: "include",
     })
-      .then(() => {
+      .then((response) => {
+        if (response.status !== 200) {
+            throw new Error("Erreur interne du serveur")
+          }
         props.changeAuthStatus(false);
       })
       .catch((error) => {
-        console.log("Erreur de requete serveur en faisant le logout");
+        throw new Error(error);
       });
   };
 
   const [profile, setProfile] = useState("Chargement...");
 
-
   //Fetch de la base de donnée avant chaque render et changement de l'état
   useEffect(() => {
-
-    fetch(url+"/api/users/loggeduser", {
+    fetch(url + "/api/users/loggeduser", {
       method: "GET",
       credentials: "include",
     })
@@ -48,11 +49,9 @@ function LogoutComponent(props) {
             ")"
         );
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         props.changeAuthStatus(false);
       });
-
   }, []);
 
   return (

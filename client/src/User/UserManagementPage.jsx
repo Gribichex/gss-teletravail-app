@@ -2,7 +2,7 @@ import React from "react";
 import LoginComponent from "./components/LoginComponent";
 import LogoutComponent from "./components/LogoutComponent";
 
-function Login(props) {
+function UserManagementPage(props) {
   return (
     <div>
       {props.currentAuth ? (
@@ -14,4 +14,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default UserManagementPage;

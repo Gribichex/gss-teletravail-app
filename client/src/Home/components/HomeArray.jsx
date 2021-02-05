@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import UserSchedule from "./UserSchedule";
-import { v4 as uuidv4 } from "uuid";
+
 import compareAsc from "date-fns/compareAsc";
 import parseISO from "date-fns/parseISO";
+import format from 'date-fns/format'
+import fr from 'date-fns/locale/fr'
+
 import styles from "./HomeArray.module.css";
 import { useHistory } from "react-router-dom";
-import { config } from './../../Constants'
-var url = config.url.API_URL;
+import { config } from "../../Constants";
+
+
+
+let url = config.url.API_URL;
+let department = config.department;
 
 const HomeArray = (props) => {
   const history = useHistory();
@@ -16,8 +23,8 @@ const HomeArray = (props) => {
   //Fetch de la base de donnée avant chaque render et changement de l'état
   useEffect(() => {
     if (props.currentAuth) {
-      let department = "GSS";
-      fetch(url+"/api/users/?department=" + department, {
+      
+      fetch(url + "/api/users/?department=" + department, {
         method: "GET",
         credentials: "include",
       })
@@ -44,7 +51,6 @@ const HomeArray = (props) => {
           setUserData(loadedData);
         })
         .catch((error) => {
-          console.log(error);
           history.push("/login");
         });
     }
@@ -52,8 +58,7 @@ const HomeArray = (props) => {
 
   const updateUser = (user, month, indexJour, previousStatus) => {
     const userDataCopy = [...userData];
-
-    let newStatus = (previousStatus + 1) % 3;
+    let newStatus = (previousStatus + 1) % 4;
 
     const updateDate = new Date(
       Date.UTC(month.indexOfYear, month.indexOfMonth, indexJour + 1)
@@ -90,7 +95,7 @@ const HomeArray = (props) => {
     //console.log(userDataCopy);
     //console.log(JSON.stringify(userDataCopy[userIndex]));
 
-    fetch(url+"/api/users/" + userDataCopy[userIndex].email, {
+    fetch(url + "/api/users/" + userDataCopy[userIndex].email, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -114,23 +119,29 @@ const HomeArray = (props) => {
       });
   };
 
-  const renderHeaderRow = (nbDays) => {
-    const headerRowArray = [
-      <th key={uuidv4()} className={styles.th}>
-        Jour du Mois
-      </th>,
-    ];
+  const renderHeaderRow = ({
+    weekDay,
+    indexOfDay,
+    indexOfMonth,
+    indexOfYear,
+  }) => {
+    const headerRowArray = [<th key={0} className={styles.th}>Jour de la semaine</th>];
 
-    for (let i = 0; i < nbDays; i++) {
+
+    for (let i = 1; i < 8; i++) {
+
+      let currentIndexOfDay = indexOfDay-weekDay+i;
+      let currentDate = new Date(indexOfYear,indexOfMonth,currentIndexOfDay)
+      let currentDateString = format(currentDate, 'EE dd',{ locale: fr })
+
       headerRowArray.push(
-        <th key={uuidv4()} className={styles.th}>
-          {(i + 1).toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
+        <th key={i} className={styles.th}>
+          {currentDateString}
         </th>
       );
     }
+
+
     return headerRowArray;
   };
 
@@ -148,9 +159,9 @@ const HomeArray = (props) => {
   return (
     <div>
       {userData && userData.length ? (
-        <Table bordered hover responsive size="sm">
+        <Table variant="dark" bordered hover responsive size="sm">
           <thead>
-            <tr>{renderHeaderRow(props.selectedDate.nbDays)}</tr>
+            <tr>{renderHeaderRow(props.selectedDate)}</tr>
           </thead>
           <tbody>{renderTableContent(userData, props.selectedDate)}</tbody>
         </Table>

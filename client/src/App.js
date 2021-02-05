@@ -1,17 +1,16 @@
-import React, { Suspense, lazy } from "react";
-import Header from "./common/Header";
+import React, { Suspense, lazy,useState,useEffect } from "react";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
-
-import { useState } from "react";
-
-import styles from "./global.module.css";
-import { useEffect } from "react";
 import { config } from "./Constants";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+
+import Header from "./common/Header";
+const Home = lazy(() => import("./Home/Home"));
+const Login = lazy(() => import("./User/UserManagementPage"));
+
 var url = config.url.API_URL;
 
-const Home = lazy(() => import("./Home/Home"));
-const Login = lazy(() => import("./Login/Login"));
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -32,13 +31,12 @@ function App() {
         setIsAuth(true);
       })
       .catch((error) => {
-        console.log(error);
         setIsAuth(false);
       });
   }, []);
 
   return (
-    <div className={styles.global}>
+ 
       <BrowserRouter>
         <Header loginStatus={isAuth} />
         <Suspense fallback={<div>Chargement...</div>}>
@@ -52,7 +50,7 @@ function App() {
           </Switch>
         </Suspense>
       </BrowserRouter>
-    </div>
+ 
   );
 }
 

@@ -2,8 +2,8 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
-import styles from "./header.module.css";
-import Logo from "./logo.webp";
+import styles from "./Header/header.module.css";
+import Logo from "./Header/logo.webp";
 
 const Header = (props) => {
   return (
