@@ -3,7 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 import styles from "./Header/header.module.css";
-import Logo from "./Header/logo.webp";
+import Logo from "./Header/submarine.png";
 
 const Header = (props) => {
   return (
