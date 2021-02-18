@@ -18,13 +18,22 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": ["'self'", "'unsafe-inline'", "https://" + `${process.env.IP_PERSO}` + ":" + app.get("port")],
+      },
+    },
+  })
+);
 app.use(
   cors({
     origin: [
       `${process.env.FRONT_URL}`,
-      "https://"+`${process.env.IP_PERSO}`+":"+app.get("port"),
-      "https://teletravapp.herokuapp.com"
+      "https://" + `${process.env.IP_PERSO}` + ":" + app.get("port"),
+      "https://teletravapp.herokuapp.com",
     ],
     credentials: true,
     origin: true,
