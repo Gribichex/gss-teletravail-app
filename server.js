@@ -1,18 +1,15 @@
 //jshint esversion:6
 require("dotenv").config();
 
-const path = require('path');
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 var cors = require("cors");
-const { createProxyMiddleware } = require("http-proxy-middleware");
 const app = express();
-const compression = require('compression');
-const cookieParser = require('cookie-parser');
+const compression = require("compression");
+const cookieParser = require("cookie-parser");
 
-//const helmet = require("helmet");
-//const hpp = require("hpp");
-//const csurf = require("csurf");
+const helmet = require("helmet");
 
 app.set("port", process.env.PORT || 3001);
 app.use(
@@ -21,23 +18,25 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-/*app.use(
+app.use(helmet());
+app.use(
   cors({
     origin: [
       `${process.env.FRONT_URL}`,
-      'http://localhost:3001',
-      'https://teletravapp.herokuapp.com/',
+      "https://"+`${process.env.IP_PERSO}`+":"+app.get("port"),
+      "https://teletravapp.herokuapp.com"
     ],
-    credentials: true
+    credentials: true,
+    origin: true,
   })
-);*/
+);
 
-const corsConfig = {
+/*const corsConfig = {
   credentials: true,
   origin: true,
 };
 
-app.use(cors(corsConfig));
+app.use(cors(corsConfig));*/
 
 //app.use(cors());
 
@@ -57,20 +56,10 @@ app.use(compression());
 //app.use(csurf());
 
 app.use(express.static("public"));
-if (process.env.NODE_ENV !== "production") {
-  // We start a proxy to the create-react-app dev server
-  app.use(express.static("public"));
-  app.use(
-    "/",
-    createProxyMiddleware({
-      target: "http://localhost:3000",
-      changeOrigin: true,
-    })
-  );
-} else {
+if (process.env.NODE_ENV === "production") {
   // When in production
   // All url paths go to the bundled index.html
-  app.use(express.static(path.join(__dirname,"client", 'build')));
+  app.use(express.static(path.join(__dirname, "client", "build")));
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
