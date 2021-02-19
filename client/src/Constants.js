@@ -1,7 +1,7 @@
 // Constants.js
 const prod = {
   url: {
-    API_URL: "https://teletravapp.herokuapp.com",
+    API_URL: "https://gssteletravapp.herokuapp.com",
   },
   department: "GSS",
 };
