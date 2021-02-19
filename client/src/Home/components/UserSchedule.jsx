@@ -63,7 +63,7 @@ const UserSchedule = (props) => {
   return (
     <tr>
       <td className={styles.td}>
-        {props.user.firstName[0]}.{props.user.lastName.charAt(0).toUpperCase() + props.user.lastName.slice(1).toLowerCase()}
+        {props.user.firstName.charAt(0).toUpperCase()}.{props.user.lastName.charAt(0).toUpperCase() + props.user.lastName.slice(1).toLowerCase()}
       </td>
       {renderRowContent(props.user, props.selectedDate)}
     </tr>
