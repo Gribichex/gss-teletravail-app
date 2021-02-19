@@ -8,5 +8,6 @@
 .img {
   width: 100%;
   height: auto;
-  max-width:30vw;
+  min-width: 30px;
+  max-width:calc(7vh);
 }

@@ -43,10 +43,8 @@ function LogoutComponent(props) {
           "Vous êtes loggé comme " +
             resultat.firstName +
             " " +
-            resultat.lastName +
-            " (" +
-            resultat.email +
-            ")"
+            resultat.lastName
+
         );
       })
       .catch(() => {
