@@ -1,7 +1,7 @@
 // Constants.js
 const prod = {
   url: {
-    API_URL: "https://teletravapp.onrender.com/",
+    API_URL: "https://teletravapp.onrender.com",
   },
   department: "GSS",
 };

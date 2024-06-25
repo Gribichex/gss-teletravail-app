@@ -33,7 +33,7 @@ app.use(
     origin: [
       `${process.env.FRONT_URL}`,
       "https://" + `${process.env.IP_PERSO}` + ":" + app.get("port"),
-      "https://teletravapp.onrender.com/",
+      "https://teletravapp.onrender.com",
     ],
     credentials: true,
     origin: true,
