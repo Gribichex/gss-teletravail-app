@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import MonthPicker from "./components/MonthPicker";
 import HomeArray from "./components/HomeArray";
 import TickDay from "./components/TickDay";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import {
   getDaysInMonth,
@@ -135,6 +136,10 @@ const Home = (props) => {
       )}
     </Container>
   );
+};
+
+Home.props = {
+  currentAuth: PropTypes.bool.isRequired,
 };
 
 export default Home;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import UserSchedule from "./UserSchedule";
-
+import PropTypes from "prop-types";
 import compareAsc from "date-fns/compareAsc";
 import parseISO from "date-fns/parseISO";
 import format from "date-fns/format";
@@ -47,7 +47,7 @@ const HomeArray = (props) => {
 
           setUserData(loadedData);
         })
-        .catch((error) => {
+        .catch(() => {
           navigate("/login");
         });
     }
@@ -168,6 +168,11 @@ const HomeArray = (props) => {
       )}
     </div>
   );
+};
+
+HomeArray.props = {
+  currentAuth: PropTypes.bool.isRequired,
+  selectedDate: PropTypes.object.isRequired,
 };
 
 export default HomeArray;
