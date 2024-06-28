@@ -4,9 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { config } from "../../Constants";
+import { propTypes } from "react-bootstrap/esm/Image";
 var url = config.url.API_URL;
 
-function LogoutComponent(props) {
+function LogoutComponent({ changeAuthStatus }) {
   const handleLogout = () => {
     return fetch(url + "/auth/logout", {
       method: "GET",
@@ -16,7 +17,7 @@ function LogoutComponent(props) {
         if (response.status !== 200) {
           throw new Error("Erreur interne du serveur");
         }
-        props.changeAuthStatus(false);
+        changeAuthStatus(false);
       })
       .catch((error) => {
         throw new Error(error);
@@ -50,9 +51,9 @@ function LogoutComponent(props) {
         );
       })
       .catch(() => {
-        props.changeAuthStatus(false);
+        changeAuthStatus(false);
       });
-  });
+  }, [changeAuthStatus]);
 
   return (
     <Container className="my-5 ">
@@ -76,5 +77,8 @@ function LogoutComponent(props) {
     </Container>
   );
 }
+LogoutComponent.propTypes = {
+  changeAuthStatus: propTypes.func.isRequired,
+};
 
 export default LogoutComponent;
