@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { Formik } from "formik";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { Container } from "react-bootstrap";
 import { config } from "../../../Constants";
@@ -11,7 +11,7 @@ import { config } from "../../../Constants";
 var url = config.url.API_URL;
 
 function LoginSubComponent(props) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const schema = yup.object({
     email: yup
       .string()
@@ -42,7 +42,9 @@ function LoginSubComponent(props) {
       })
         .then((response) => {
           if (response.status !== 200) {
-            throw new Error("Erreur du serveur non disponible ou adresse e-mail/mot de passe incorrect")
+            throw new Error(
+              "Erreur du serveur non disponible ou adresse e-mail/mot de passe incorrect"
+            );
           }
           props.changeAuthStatus(true);
           resolve(true);
@@ -61,7 +63,7 @@ function LoginSubComponent(props) {
           handleLogin(values)
             .then(() => {
               actions.setSubmitting(false);
-              history.push("/");
+              navigate("/");
             })
             .catch((error) => {
               alert(error.message);

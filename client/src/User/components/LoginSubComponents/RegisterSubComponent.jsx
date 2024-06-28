@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { useFormikContext, Formik } from "formik";
-import { useHistory } from "react-router-dom";
+import { Formik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { Container } from "react-bootstrap";
 import { config } from "../../../Constants";
@@ -12,7 +12,7 @@ let url = config.url.API_URL;
 let department = config.department;
 
 function RegisterSubComponent(props) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const schema = yup.object({
     fName: yup.string().when("$isRegistered", {
@@ -66,7 +66,9 @@ function RegisterSubComponent(props) {
       })
         .then((response) => {
           if (response.status !== 200) {
-            throw new Error("Erreur du serveur non disponible ou adresse e-mail déjà enregistrée");
+            throw new Error(
+              "Erreur du serveur non disponible ou adresse e-mail déjà enregistrée"
+            );
           }
           props.changeAuthStatus(true);
           resolve(true);
@@ -85,7 +87,7 @@ function RegisterSubComponent(props) {
           handleRegister(values)
             .then(() => {
               actions.setSubmitting(false);
-              history.push("/");
+              navigate("/");
             })
             .catch((error) => {
               alert(error.message);

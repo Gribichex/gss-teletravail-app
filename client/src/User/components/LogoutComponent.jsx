@@ -14,8 +14,8 @@ function LogoutComponent(props) {
     })
       .then((response) => {
         if (response.status !== 200) {
-            throw new Error("Erreur interne du serveur")
-          }
+          throw new Error("Erreur interne du serveur");
+        }
         props.changeAuthStatus(false);
       })
       .catch((error) => {
@@ -52,7 +52,7 @@ function LogoutComponent(props) {
       .catch(() => {
         props.changeAuthStatus(false);
       });
-  }, []);
+  });
 
   return (
     <Container className="my-5 ">

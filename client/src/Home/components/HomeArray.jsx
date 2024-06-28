@@ -4,26 +4,23 @@ import UserSchedule from "./UserSchedule";
 
 import compareAsc from "date-fns/compareAsc";
 import parseISO from "date-fns/parseISO";
-import format from 'date-fns/format'
-import fr from 'date-fns/locale/fr'
+import format from "date-fns/format";
+import fr from "date-fns/locale/fr";
 
 import styles from "./HomeArray.module.css";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { config } from "../../Constants";
-
-
 
 let url = config.url.API_URL;
 let department = config.department;
 
 const HomeArray = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState([]);
 
   //Fetch de la base de donnée avant chaque render et changement de l'état
   useEffect(() => {
     if (props.currentAuth) {
-      
       fetch(url + "/api/users/?department=" + department, {
         method: "GET",
         credentials: "include",
@@ -51,10 +48,10 @@ const HomeArray = (props) => {
           setUserData(loadedData);
         })
         .catch((error) => {
-          history.push("/login");
+          navigate("/login");
         });
     }
-  }, []);
+  });
 
   const updateUser = (user, month, indexJour, previousStatus) => {
     const userDataCopy = [...userData];
@@ -114,7 +111,7 @@ const HomeArray = (props) => {
         setUserData((previous) => userDataCopy);
       })
       .catch((err) => {
-        history.push("/login");
+        navigate("/login");
         console.log(err);
       });
   };
@@ -125,14 +122,16 @@ const HomeArray = (props) => {
     indexOfMonth,
     indexOfYear,
   }) => {
-    const headerRowArray = [<th key={0} className={styles.th}>Jour de la semaine</th>];
-
+    const headerRowArray = [
+      <th key={0} className={styles.th}>
+        Jour de la semaine
+      </th>,
+    ];
 
     for (let i = 1; i < 8; i++) {
-
-      let currentIndexOfDay = indexOfDay-weekDay+i;
-      let currentDate = new Date(indexOfYear,indexOfMonth,currentIndexOfDay)
-      let currentDateString = format(currentDate, 'EE dd',{ locale: fr })
+      let currentIndexOfDay = indexOfDay - weekDay + i;
+      let currentDate = new Date(indexOfYear, indexOfMonth, currentIndexOfDay);
+      let currentDateString = format(currentDate, "EE dd", { locale: fr });
 
       headerRowArray.push(
         <th key={i} className={styles.th}>
@@ -140,7 +139,6 @@ const HomeArray = (props) => {
         </th>
       );
     }
-
 
     return headerRowArray;
   };
