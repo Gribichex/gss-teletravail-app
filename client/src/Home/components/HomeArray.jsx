@@ -51,7 +51,7 @@ const HomeArray = (props) => {
           navigate("/login");
         });
     }
-  });
+  }, [navigate, props.currentAuth]);
 
   const updateUser = (user, month, indexJour, previousStatus) => {
     const userDataCopy = [...userData];
