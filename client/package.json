@@ -24,6 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint 'src/**/*.{js,mjs,cjs,jsx}'",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "resources": "cordova-res android --skip-config --copy"
@@ -48,6 +49,10 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.24.7",
-    "@capacitor/cli": "2.4.6"
+    "@capacitor/cli": "2.4.6",
+    "@eslint/js": "^9.5.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.3",
+    "globals": "^15.6.0"
   }
 }
