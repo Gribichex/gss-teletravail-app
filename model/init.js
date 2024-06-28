@@ -1,6 +1,25 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://"+process.env.DB_USER+":"+process.env.DB_PASSWORD+"@cluster0.kq2cucd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+// Determine the environment, defaulting to 'development' if NODE_ENV is not set
+const env = process.env.NODE_ENV || 'development';
 
-module.exports = mongoose
+let dbName;
+
+// Determine the database name based on the environment
+switch(env) {
+  case 'test':
+    dbName = 'test_db';
+    break;
+  case 'production':
+    dbName = 'prod_db';
+    break;
+  default:
+    dbName = 'dev_db';
+}
+// Connect to MongoDB
+mongoose.connect(dbURI)
+  .then(() => console.log(`Connected to MongoDB (${process.env.NODE_ENV} environment)`))
+  .catch((err) => console.error('Could not connect to MongoDB', err));
+
+module.exports = mongoose;
